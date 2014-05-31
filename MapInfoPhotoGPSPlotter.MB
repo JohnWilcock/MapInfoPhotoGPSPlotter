@@ -1,0 +1,168 @@
+'/*****************************************************************************
+'*       Author JWilcock 2014
+'*      GPS
+'*****************************************************************************
+
+'****************************************************************************
+' Include files and Define statements
+'****************************************************************************
+Include "C:\Program Files (x86)\MapInfo\MapBasic\MAPBASIC.DEF"
+Include "C:\Program Files (x86)\MapInfo\MAPBASIC\menu.def"  
+Include "C:\Program Files (x86)\MapInfo\MAPBASIC\icons.def" 
+'****************************************************************************
+
+
+'****************************************************************************
+' .NET Functions
+'****************************************************************************
+Declare Method GetResItemStr Class "MapInfoPhotoGPSPlotter.Controller" Lib "MapInfoPhotoGPSPlotter.dll" (ByVal itemName As String) As String
+Declare Method ShowDlg Class "MapInfoPhotoGPSPlotter.Controller" Lib "MapInfoPhotoGPSPlotter.dll" (ByVal hwnd as Integer) As Logical
+Declare Method CloseDlg Class "MapInfoPhotoGPSPlotter.Controller" Lib "MapInfoPhotoGPSPlotter.dll" () As Logical
+Declare Method  About Class "MapInfoPhotoGPSPlotter.Dlg" Lib "MapInfoPhotoGPSPlotter.dll" as logical
+Declare Method  CreateBlank Class "MapInfoPhotoGPSPlotter.Dlg" Lib "MapInfoPhotoGPSPlotter.dll"
+'****************************************************************************
+' Declare sub procedures
+'****************************************************************************
+Declare Sub Main
+Declare Sub EndHandler 
+Declare Sub loader
+Declare Sub MapInfoPhotoGPSPlotter
+declare sub ShowAbout
+
+' Handlers for dialog controls: 
+Declare Sub bye 
+
+declare function RegisterTool lib "tooltabl.dll" (
+	byval title as string,
+	byval description as string,
+	byval location as string,
+	byval owner as string,
+byval autoload as integer) as integer
+declare function UnregisterAllByOwner lib "tooltabl.dll" (byval owner as string) as integer
+
+'****************************************************************************
+' Declare global variables. 
+'****************************************************************************
+Global window_id As Integer   ' Window ID of current (map) window 
+
+   
+Global ReturnString as string 
+   
+Sub Main
+
+	
+  OnError Goto HandleError
+  ' Assign some global variables, so that the Auto-Load button 
+  ' (in the About dialog) can use the library routines 
+  ' stored in AUTO_LIB.MBO.  
+
+
+'check if file exists 
+if FileExists(GetFolderPath$(-3) + "\" + "MapInfoPhotoGPSPlotter.tab") then
+	'do nothing
+else
+
+
+	'dim regTool as integer
+	'dim thePath as string  
+	'thePath = ApplicationDirectory$( ) + "MapInfoPhotoGPSPlotter.mbx"
+	'regTool = RegisterTool("MapInfoPhotoGPSPlotter", "Get Elevation profiles",thePath,"JWilcock",1)
+	'call CreateBlank()
+end if
+
+
+ call loader
+     'Show 
+
+'add menu to tools
+	Create Menu "GPS Extractor &Tool" as
+		"Show &Tool" Calling loader,
+		"(-",
+		"&About" calling ShowAbout,
+		"E&xit" calling bye
+
+  	Alter Menu "Tools" Add "GPS Extractor &Tool" As "GPS Extractor &Tool"
+	
+  Exit Sub
+  HandleError:
+    Note "Main: " + Error$()
+    Resume Next
+End Sub
+
+'****************************************************************************
+' 
+'
+' 
+' 
+'****************************************************************************
+Sub loader 
+  OnError Goto HandleError
+  'If NumWindows() < 1 Then 
+  '  Note GetResItemStr("ERR_NO_WIN_OPEN") 
+  '  Exit Sub 
+  'End If 
+
+  'window_id = FrontWindow()
+    
+ ' If WindowInfo(window_id, WIN_INFO_TYPE ) <> WIN_MAPPER Then 
+  '  Note GetResItemStr("ERR_FRONT_WIN_NOT_MAPPER") 
+  '  Exit Sub 
+  'End If  
+   
+  ' Display a dialog 
+ 
+  Dim ret As Logical
+  Dim hwndPro as Integer
+  hwndPro = SystemInfo(SYS_INFO_MAPINFOWND)
+  ret = ShowDlg(hwndPro)
+  If Not ret Then
+    Note GetResItemStr("ERR_MB_DLG_NOT_DISPLAYED")
+  End If
+  Exit Sub
+  HandleError:
+    Note "MapInfoPhotoGPSPlotter: " + Error$()
+    Resume Next
+End Sub
+
+sub ShowAbout
+	dim iret as logical
+	iret = About()
+End Sub
+
+'*****************************************************************
+' If user chooses Close menu item, shut down. 
+Sub bye 
+  OnError Goto HandleError
+  End Program
+  HandleError:
+    Note "bye: " + Error$()
+    Resume Next 
+End Sub 
+
+Sub  EndHandler
+  OnError Goto HandleError
+  Dim ret as Logical
+  ret = CloseDlg()
+  Exit Sub
+  HandleError:
+    Note "EndHandler: " + Error$()
+    Resume Next
+end sub
+
+
+' ////////////////////// end 
+
+sub MapInfoPhotoGPSPlotter
+
+	
+end sub
+
+ 
+       	
+ 
+
+
+      
+      
+     
+
