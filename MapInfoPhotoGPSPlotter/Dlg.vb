@@ -71,6 +71,7 @@ Namespace MapInfoPhotoGPSPlotter
             ComboBox1.SelectedIndex = 0
             ComboBox2.SelectedIndex = 1
             Label3.Text = "WGS 84 - Latlon"
+            CoordinateSystemPicker1.ChosenCoordSystemEPSG = "4326"
             InteropHelper.theDlg = Me
         End Sub
 
@@ -220,6 +221,7 @@ Namespace MapInfoPhotoGPSPlotter
 
             'set file open dialog
             Dim OFD As New OpenFileDialog
+            Dim thePhoto As Bitmap
             OFD.Filter = "Image Files (*.jpg)|*.jpg|All Files (*.*)|*.*"
             OFD.FilterIndex = 1
             OFD.Title = "Open Image File/s"
@@ -236,7 +238,9 @@ Namespace MapInfoPhotoGPSPlotter
                     'check for gps info
                     If isGPS(Bitmap.FromFile(item), item) Then
                         'get info and place into photo class > put in list
-                        photoList.Add(imageInfo(Bitmap.FromFile(item), item))
+                        thePhoto = Bitmap.FromFile(item)
+                        photoList.Add(imageInfo(thePhoto, item))
+                        thePhoto.Dispose()
                     End If
                 Next
 
@@ -431,7 +435,7 @@ Namespace MapInfoPhotoGPSPlotter
 
             'get coord system
             'default wgs 84
-            Dim coord As String = InteropServices.MapInfoApplication.Eval("EPSGToCoordSysString$(" & CoordinateSystemPicker1.ChosenCoordSystemEPSG & ")")
+            Dim coord As String = InteropServices.MapInfoApplication.Eval("EPSGToCoordSysString$(" & Chr(34) & "EPSG:" & CoordinateSystemPicker1.ChosenCoordSystemEPSG & Chr(34) & ")")
 
             Select Case ComboBox2.SelectedIndex
                 Case 1, 2
@@ -499,7 +503,7 @@ Namespace MapInfoPhotoGPSPlotter
 
 
                     TextBox2.Text = TextBox2.Text & vbNewLine & "mapper = " & CoordinateSystemPicker1.ChosenCoordSystemEPSG
-                    CoordinateSystemPicker1.ChosenCoordSystem = InteropServices.MapInfoApplication.Eval("CoordSysName$(EPSGToCoordSysString$(" & CoordinateSystemPicker1.ChosenCoordSystemEPSG & "))")
+                    CoordinateSystemPicker1.ChosenCoordSystem = InteropServices.MapInfoApplication.Eval("CoordSysName$(EPSGToCoordSysString$(" & Chr(34) & "EPSG:" & CoordinateSystemPicker1.ChosenCoordSystemEPSG & Chr(34) & "))")
                     TextBox2.Text = TextBox2.Text & vbNewLine & "converting coord system to cosmetic mapper = " & CoordinateSystemPicker1.ChosenCoordSystem
 
                     'add graphic objects only
@@ -609,6 +613,8 @@ Namespace MapInfoPhotoGPSPlotter
                 CheckBox2.Checked = False
                 Button1.Enabled = False
                 Label3.Visible = False
+                CoordinateSystemPicker1.ChosenCoordSystemEPSG = "4326"
+                Label3.Text = "WGS 84 - Latlon"
             Else
                 CheckBox2.Checked = True
                 Button1.Enabled = True
