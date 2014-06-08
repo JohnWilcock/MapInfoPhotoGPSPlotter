@@ -37,6 +37,7 @@ Namespace MapInfoPhotoGPSPlotter
             Me.Button1 = New System.Windows.Forms.Button()
             Me.Label3 = New System.Windows.Forms.Label()
             Me.CheckBox2 = New System.Windows.Forms.CheckBox()
+            Me.CoordinateSystemPicker1 = New CoordinateSystemPicker()
             Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
             Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
             Me.Label4 = New System.Windows.Forms.Label()
@@ -51,11 +52,13 @@ Namespace MapInfoPhotoGPSPlotter
             Me.Label1 = New System.Windows.Forms.Label()
             Me.CheckBox1 = New System.Windows.Forms.CheckBox()
             Me.TabPage2 = New System.Windows.Forms.TabPage()
+            Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
+            Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
             Me.TextBox2 = New System.Windows.Forms.TextBox()
+            Me.Label5 = New System.Windows.Forms.Label()
             Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
             Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
             Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
-            Me.CoordinateSystemPicker1 = New CoordinateSystemPicker()
             Me.ToolStripContainer1.ContentPanel.SuspendLayout()
             Me.ToolStripContainer1.TopToolStripPanel.SuspendLayout()
             Me.ToolStripContainer1.SuspendLayout()
@@ -71,6 +74,7 @@ Namespace MapInfoPhotoGPSPlotter
             Me.TableLayoutPanel2.SuspendLayout()
             Me.TableLayoutPanel3.SuspendLayout()
             Me.TabPage2.SuspendLayout()
+            Me.TableLayoutPanel9.SuspendLayout()
             Me.ToolStrip1.SuspendLayout()
             Me.SuspendLayout()
             '
@@ -149,6 +153,14 @@ Namespace MapInfoPhotoGPSPlotter
             resources.ApplyResources(Me.CheckBox2, "CheckBox2")
             Me.CheckBox2.Name = "CheckBox2"
             Me.CheckBox2.UseVisualStyleBackColor = True
+            '
+            'CoordinateSystemPicker1
+            '
+            Me.CoordinateSystemPicker1.ChosenCoordMIString = Nothing
+            Me.CoordinateSystemPicker1.ChosenCoordSystemEPSG = Nothing
+            Me.CoordinateSystemPicker1.ChosenCoordSystemWKT = Nothing
+            resources.ApplyResources(Me.CoordinateSystemPicker1, "CoordinateSystemPicker1")
+            Me.CoordinateSystemPicker1.Name = "CoordinateSystemPicker1"
             '
             'TableLayoutPanel4
             '
@@ -236,15 +248,33 @@ Namespace MapInfoPhotoGPSPlotter
             '
             'TabPage2
             '
-            Me.TabPage2.Controls.Add(Me.TextBox2)
+            Me.TabPage2.Controls.Add(Me.TableLayoutPanel9)
             resources.ApplyResources(Me.TabPage2, "TabPage2")
             Me.TabPage2.Name = "TabPage2"
             Me.TabPage2.UseVisualStyleBackColor = True
+            '
+            'TableLayoutPanel9
+            '
+            resources.ApplyResources(Me.TableLayoutPanel9, "TableLayoutPanel9")
+            Me.TableLayoutPanel9.Controls.Add(Me.ProgressBar1, 0, 0)
+            Me.TableLayoutPanel9.Controls.Add(Me.TextBox2, 0, 2)
+            Me.TableLayoutPanel9.Controls.Add(Me.Label5, 0, 1)
+            Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
+            '
+            'ProgressBar1
+            '
+            resources.ApplyResources(Me.ProgressBar1, "ProgressBar1")
+            Me.ProgressBar1.Name = "ProgressBar1"
             '
             'TextBox2
             '
             resources.ApplyResources(Me.TextBox2, "TextBox2")
             Me.TextBox2.Name = "TextBox2"
+            '
+            'Label5
+            '
+            resources.ApplyResources(Me.Label5, "Label5")
+            Me.Label5.Name = "Label5"
             '
             'ToolStrip1
             '
@@ -261,14 +291,6 @@ Namespace MapInfoPhotoGPSPlotter
             '
             resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
             Me.ToolStripButton2.Name = "ToolStripButton2"
-            '
-            'CoordinateSystemPicker1
-            '
-            Me.CoordinateSystemPicker1.ChosenCoordMIString = Nothing
-            Me.CoordinateSystemPicker1.ChosenCoordSystemEPSG = Nothing
-            Me.CoordinateSystemPicker1.ChosenCoordSystemWKT = Nothing
-            resources.ApplyResources(Me.CoordinateSystemPicker1, "CoordinateSystemPicker1")
-            Me.CoordinateSystemPicker1.Name = "CoordinateSystemPicker1"
             '
             'Dlg
             '
@@ -300,7 +322,8 @@ Namespace MapInfoPhotoGPSPlotter
             Me.TableLayoutPanel3.ResumeLayout(False)
             Me.TableLayoutPanel3.PerformLayout()
             Me.TabPage2.ResumeLayout(False)
-            Me.TabPage2.PerformLayout()
+            Me.TableLayoutPanel9.ResumeLayout(False)
+            Me.TableLayoutPanel9.PerformLayout()
             Me.ToolStrip1.ResumeLayout(False)
             Me.ToolStrip1.PerformLayout()
             Me.ResumeLayout(False)
@@ -335,6 +358,9 @@ End Sub
         Friend WithEvents TableLayoutPanel8 As System.Windows.Forms.TableLayoutPanel
         Friend WithEvents TableLayoutPanel6 As System.Windows.Forms.TableLayoutPanel
         Friend WithEvents CoordinateSystemPicker1 As CoordinateSystemPicker
+        Friend WithEvents TableLayoutPanel9 As System.Windows.Forms.TableLayoutPanel
+        Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
+        Friend WithEvents Label5 As System.Windows.Forms.Label
 
 #End Region
 

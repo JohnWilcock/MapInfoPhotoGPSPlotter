@@ -70,6 +70,11 @@ Public Class CoordinateSystemPicker
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        If ListBox1.SelectedIndex < 0 Then
+            MsgBox("No CRS selected, Highlight a coordinate system in the list")
+            Exit Sub
+        End If
+
         ChosenCoordSystem = WKTList(ListBox1.SelectedIndex).WKTName
         ChosenCoordSystemEPSG = WKTList(ListBox1.SelectedIndex).WKID
         ChosenCoordSystemWKT = WKTList(ListBox1.SelectedIndex).WKT

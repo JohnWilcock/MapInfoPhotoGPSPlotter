@@ -95,6 +95,10 @@ Namespace MapInfoPhotoGPSPlotter
         ''' <param name="e"></param> 
         Private Sub NViewDlg_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
             'CreateBlank()
+            'set smaller font size
+            Dim theFont As Font = New Font(Me.Font.FontFamily, 7, FontStyle.Regular)
+            TextBox2.Font = theFont
+
             If firstLoad = True Then
                 firstLoad = False
 
@@ -185,11 +189,13 @@ Namespace MapInfoPhotoGPSPlotter
         End Sub
 
         Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
+            TabPage2.Show()
             getGPSFiles()
             createTabFile(getFileLocation)
         End Sub
 
         Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+            TabPage2.Show()
             getGPSFolder()
             createTabFile(getFileLocation)
         End Sub
@@ -216,12 +222,24 @@ Namespace MapInfoPhotoGPSPlotter
 
         End Sub
 
+        Sub increaseIncrement(ByVal currentValue As Integer, ByVal maxVal As Integer)
+            Dim ProgressValue As Double = Math.Floor((currentValue / maxVal) * 100)
+            If ProgressValue > 100 Then
+                Exit Sub
+            Else
+                ProgressBar1.Value = ProgressValue
+            End If
+
+        End Sub
+
+
         Sub getGPSFiles()
             clear()
 
             'set file open dialog
             Dim OFD As New OpenFileDialog
             Dim thePhoto As Bitmap
+            Dim count As Integer = 1
             OFD.Filter = "Image Files (*.jpg)|*.jpg|All Files (*.*)|*.*"
             OFD.FilterIndex = 1
             OFD.Title = "Open Image File/s"
@@ -237,10 +255,17 @@ Namespace MapInfoPhotoGPSPlotter
 
                     'check for gps info
                     If isGPS(Bitmap.FromFile(item), item) Then
+                        'proccessing text update
+                        Label5.Text = "Processing " & count & "/" & allFiles.Length & " ..." & Path.GetFileNameWithoutExtension(item)
+
                         'get info and place into photo class > put in list
                         thePhoto = Bitmap.FromFile(item)
                         photoList.Add(imageInfo(thePhoto, item))
                         thePhoto.Dispose()
+
+                        'prog bar update
+                        increaseIncrement(count, allFiles.Length)
+                        count = count + 1
                     End If
                 Next
 
@@ -251,6 +276,7 @@ Namespace MapInfoPhotoGPSPlotter
         Sub getGPSFolder()
             clear()
             Dim MBFD As New FolderBrowserDialog
+            Dim thePhoto As Bitmap
             If MBFD.ShowDialog = Windows.Forms.DialogResult.OK Then
 
             Else
@@ -264,7 +290,11 @@ Namespace MapInfoPhotoGPSPlotter
             For Each fileName As String In fileEntries
                 If fileName.Substring(fileName.Length - 3, 3).ToUpper = "JPG" Then
                     If isGPS(Bitmap.FromFile(fileName), fileName) Then
-                        photoList.Add(imageInfo(Bitmap.FromFile(fileName), fileName))
+                        'get info and place into photo class > put in list
+                        thePhoto = Bitmap.FromFile(fileName)
+                        photoList.Add(imageInfo(thePhoto, fileName))
+                        thePhoto.Dispose()
+
                     End If
                 End If
 
@@ -324,6 +354,7 @@ Namespace MapInfoPhotoGPSPlotter
                     'Latitude North or South
                     ascii_string_property_id = System.Text.Encoding.ASCII.GetString(byte_property_id)
                     imageInfo.NS = ascii_string_property_id
+
 
                 ElseIf scan_property = 2 Then
                     'Latitude degrees minutes and seconds (rational)
@@ -427,7 +458,11 @@ Namespace MapInfoPhotoGPSPlotter
         End Function
 
         Sub createTabFile(ByVal fileLocation As String)
-            If fileLocation = "-1" Then Exit Sub
+            If fileLocation = "-1" Then
+                TextBox2.Text = TextBox2.Text & vbCrLf & "No valid output file location specified"
+                Exit Sub
+            End If
+
             Dim tableName As String = ""
             Dim pointString As String = ""
             Dim points As Double()
@@ -526,6 +561,11 @@ Namespace MapInfoPhotoGPSPlotter
 
             End Select
             addMapper(fileLocation, tableName)
+
+            'zoom to points
+            If CheckBox1.Checked Then
+                InteropServices.MapInfoApplication.Do("Set Map Zoom Entire Layer 1") 'will always be top layer
+            End If
         End Sub
 
         Function createPointString(ByVal x As Double, ByVal y As Double) As String
