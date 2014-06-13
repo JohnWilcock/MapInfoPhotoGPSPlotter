@@ -9,7 +9,7 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("MapInfoPhotoGPSPlotter")> 
-<Assembly: AssemblyDescription("")> 
+<Assembly: AssemblyDescription("plots the locations of photographs tagged with geolocation. Most modern camera phones, tablets and gps enabled cameras will produce these.")> 
 <Assembly: AssemblyCompany("")> 
 <Assembly: AssemblyProduct("")> 
 <Assembly: AssemblyCopyright("J.Wilcock 2014")> 
@@ -18,7 +18,7 @@ Imports System.Runtime.InteropServices
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("2f32a0c2-01e6-41c1-9ce0-7d921d2bdecf")> 
+<Assembly: Guid("8287e94c-d6c3-44da-8029-1da61a2a54fa")> 
 
 ' Version information for an assembly consists of the following four values:
 '

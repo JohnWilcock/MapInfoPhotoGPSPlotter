@@ -88,16 +88,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized resource of type System.Byte[].
-        '''</summary>
-        Friend ReadOnly Property ProfileToolHelp() As Byte()
-            Get
-                Dim obj As Object = ResourceManager.GetObject("ProfileToolHelp", resourceCulture)
-                Return CType(obj,Byte())
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Looks up a localized string similar to 2000;PROJCS[&quot;Anguilla 1957 / British West Indies Grid&quot;,GEOGCS[&quot;Anguilla 1957&quot;,DATUM[&quot;Anguilla_1957&quot;,SPHEROID[&quot;Clarke 1880 (RGS)&quot;,6378249.145,293.465,AUTHORITY[&quot;EPSG&quot;,&quot;7012&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6600&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.01745329251994328,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;4600&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,-62],PARAMETER[&quot;scale_factor&quot;,0.9995],PARAMETER[&quot;false_easting&quot;,400000],PARAMETER [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property SRID() As String

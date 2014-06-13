@@ -104,7 +104,10 @@ Public Class CoordinateSystemPicker
     End Sub
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
-        SearchCSbyName(TextBox2.Text)
+        If TextBox2.Text <> "" Then
+            SearchCSbyName(TextBox2.Text)
+        End If
+        ShowAll()
     End Sub
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged

@@ -235,6 +235,7 @@ Namespace MapInfoPhotoGPSPlotter
 
         Sub getGPSFiles()
             clear()
+            TabControl1.SelectedIndex = 1
 
             'set file open dialog
             Dim OFD As New OpenFileDialog
@@ -266,23 +267,35 @@ Namespace MapInfoPhotoGPSPlotter
                         'prog bar update
                         increaseIncrement(count, allFiles.Length)
                         count = count + 1
+                    Else
+
+
+                        'prog bar update
+                        increaseIncrement(count, allFiles.Length)
+                        count = count + 1
                     End If
                 Next
-
+                Label5.Text = "Creating tab file"
+            Else
+                Exit Sub
             End If
+
         End Sub
 
 
         Sub getGPSFolder()
             clear()
+            TabControl1.SelectedIndex = 1
+
             Dim MBFD As New FolderBrowserDialog
             Dim thePhoto As Bitmap
             If MBFD.ShowDialog = Windows.Forms.DialogResult.OK Then
 
+
             Else
                 Exit Sub
             End If
-
+            Dim count As Integer = 1
 
             'cycle through files
             Dim fileEntries As String() = Directory.GetFiles(MBFD.SelectedPath)
@@ -295,11 +308,14 @@ Namespace MapInfoPhotoGPSPlotter
                         photoList.Add(imageInfo(thePhoto, fileName))
                         thePhoto.Dispose()
 
+                        'prog bar update
+                        increaseIncrement(count, fileEntries.Length)
+                        count = count + 1
                     End If
                 End If
 
             Next
-
+            Label5.Text = "Complete"
         End Sub
 
         Sub clear()
@@ -309,7 +325,11 @@ Namespace MapInfoPhotoGPSPlotter
         Function isGPS(ByVal photo As Bitmap, ByVal filename As String) As Boolean
             Dim byte_property_id As Byte()
             If photo.PropertyIdList.Length = 0 Then Return False
+
+            On Error GoTo err
             byte_property_id = photo.GetPropertyItem(2).Value
+            On Error GoTo 0
+
             'Latitude degrees minutes and seconds (rational)
             Dim _1 As Double = System.BitConverter.ToInt32(byte_property_id, 0) / System.BitConverter.ToInt32(byte_property_id, 4)
             Dim _2 As Double = System.BitConverter.ToInt32(byte_property_id, 8) / System.BitConverter.ToInt32(byte_property_id, 12)
@@ -321,6 +341,10 @@ Namespace MapInfoPhotoGPSPlotter
                 TextBox2.Text = TextBox2.Text & vbNewLine & filename & " No GPS info"
                 Return False
             End If
+
+err:
+            TextBox2.Text = TextBox2.Text & vbNewLine & filename & " No GPS info"
+            Return False
         End Function
 
         Function imageInfo(ByVal thePhoto As Bitmap, ByVal filepath As String) As Photo
@@ -410,6 +434,9 @@ Namespace MapInfoPhotoGPSPlotter
         End Function
 
         Function getFileLocation() As String
+
+            If photoList.Count = 0 Then Return "-1"
+
             If ComboBox2.Text = "Cosmetic Layer" Then
                 Return "Cosmetic"
             End If
@@ -458,6 +485,8 @@ Namespace MapInfoPhotoGPSPlotter
         End Function
 
         Sub createTabFile(ByVal fileLocation As String)
+            If photoList.Count = 0 Then Exit Sub
+
             If fileLocation = "-1" Then
                 TextBox2.Text = TextBox2.Text & vbCrLf & "No valid output file location specified"
                 Exit Sub
@@ -562,11 +591,34 @@ Namespace MapInfoPhotoGPSPlotter
             End Select
             addMapper(fileLocation, tableName)
 
+            'get map layer
+            Dim layer As Integer = findLayer(tableName)
+            TextBox2.Text = TextBox2.Text & vbCrLf & "Layer:" & layer
+
             'zoom to points
-            If CheckBox1.Checked Then
-                InteropServices.MapInfoApplication.Do("Set Map Zoom Entire Layer 1") 'will always be top layer
+            If CheckBox1.Checked Or ComboBox1.SelectedIndex = 0 Then
+                InteropServices.MapInfoApplication.Do("Set Map Zoom Entire Layer " & layer) 'will always be top layer
             End If
+
+            Label5.Text = "Configuring hyperlinks"
+            InteropServices.MapInfoApplication.Do("Set Map Layer " & layer & " Activate Using path On Objects Relative Path Off Enable On")
+
+            InteropServices.MapInfoApplication.Do("run menu command 1736")
+
+            Label5.Text = "Complete"
         End Sub
+
+        Function findLayer(ByVal layerName As String) As Integer
+            Dim numLayers As Integer = InteropServices.MapInfoApplication.Eval("mapperinfo(frontwindow(),28)")
+            For x As Integer = 1 To numLayers
+                If InteropServices.MapInfoApplication.Eval("layerinfo(frontwindow()," & x & ",24)") = 0 Then
+                    If InteropServices.MapInfoApplication.Eval("layerinfo(frontwindow()," & x & ",1)") = layerName Then
+                        Return x
+                    End If
+                End If
+            Next
+            Return -1
+        End Function
 
         Function createPointString(ByVal x As Double, ByVal y As Double) As String
             createPointString = "CreatePoint(" & x & ", " & y & ")"
@@ -662,6 +714,10 @@ Namespace MapInfoPhotoGPSPlotter
             End If
         End Sub
 
+        Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
+            Dim ab As New AboutBox1
+            ab.ShowDialog()
+        End Sub
     End Class
 
 

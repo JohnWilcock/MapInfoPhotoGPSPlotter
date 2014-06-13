@@ -59,6 +59,8 @@ Namespace MapInfoPhotoGPSPlotter
             Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
             Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
             Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
+            Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+            Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
             Me.ToolStripContainer1.ContentPanel.SuspendLayout()
             Me.ToolStripContainer1.TopToolStripPanel.SuspendLayout()
             Me.ToolStripContainer1.SuspendLayout()
@@ -279,7 +281,7 @@ Namespace MapInfoPhotoGPSPlotter
             'ToolStrip1
             '
             resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
-            Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2})
+            Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripSeparator1, Me.ToolStripButton3})
             Me.ToolStrip1.Name = "ToolStrip1"
             '
             'ToolStripButton1
@@ -291,6 +293,17 @@ Namespace MapInfoPhotoGPSPlotter
             '
             resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
             Me.ToolStripButton2.Name = "ToolStripButton2"
+            '
+            'ToolStripSeparator1
+            '
+            Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+            resources.ApplyResources(Me.ToolStripSeparator1, "ToolStripSeparator1")
+            '
+            'ToolStripButton3
+            '
+            Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
+            Me.ToolStripButton3.Name = "ToolStripButton3"
             '
             'Dlg
             '
@@ -361,6 +374,8 @@ End Sub
         Friend WithEvents TableLayoutPanel9 As System.Windows.Forms.TableLayoutPanel
         Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
         Friend WithEvents Label5 As System.Windows.Forms.Label
+        Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
+        Friend WithEvents ToolStripButton3 As System.Windows.Forms.ToolStripButton
 
 #End Region
 
