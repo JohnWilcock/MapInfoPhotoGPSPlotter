@@ -427,6 +427,14 @@ err:
                     sdate = firsthalf & secondhalf
                     imageInfo.picDate = DateTime.Parse(sdate)
 
+
+                ElseIf scan_property = 28 Then 'description of area
+                    imageInfo.picDescription = System.Text.Encoding.ASCII.GetString(byte_property_id)
+
+                ElseIf scan_property = 6 Then 'altitude
+                    imageInfo.alt = System.BitConverter.ToInt32(byte_property_id, 0)
+
+
                 End If
 
             Next
@@ -516,7 +524,7 @@ err:
 
 
                     'create file
-                    InteropServices.MapInfoApplication.Do("Create Table " & tableName & " ( FileName char(100),lat char(20),lon char(20),decimal_lat float, decimal_lon float,localX float,localY float,path char(250),direction float,PhotoDate char(50) ) file " & Chr(34) & fileLocation & Chr(34))
+                    InteropServices.MapInfoApplication.Do("Create Table " & tableName & " ( FileName char(100),lat char(20),lon char(20),decimal_lat float, decimal_lon float,localX float,localY float,path char(250),direction float,PhotoDate char(50),Description char(250),Altitude float ) file " & Chr(34) & fileLocation & Chr(34))
                     InteropServices.MapInfoApplication.Do("Create map for " & tableName & " " & coord)
 
 
@@ -536,7 +544,7 @@ err:
 
 
                         'add point
-                        InteropServices.MapInfoApplication.Do("Insert Into " & tableName & " (Obj, FileName, lat,lon,decimal_lat,decimal_lon,localX,localY,path,direction,Photodate) Values(CreatePoint(" & item.localX & ", " & item.localY & ")," & Chr(34) & item.filename & Chr(34) & "," & Chr(34) & item.lat & Chr(34) & "," & Chr(34) & item.lon & Chr(34) & "," & item.dlat & "," & item.dlon & "," & item.localX & "," & item.localY & "," & Chr(34) & item.filepath & Chr(34) & "," & item.picDirection & "," & Chr(34) & item.picDate & Chr(34) & ")")
+                        InteropServices.MapInfoApplication.Do("Insert Into " & tableName & " (Obj, FileName, lat,lon,decimal_lat,decimal_lon,localX,localY,path,direction,Photodate,Description) Values(CreatePoint(" & item.localX & ", " & item.localY & ")," & Chr(34) & item.filename & Chr(34) & "," & Chr(34) & item.lat & Chr(34) & "," & Chr(34) & item.lon & Chr(34) & "," & item.dlat & "," & item.dlon & "," & item.localX & "," & item.localY & "," & Chr(34) & item.filepath & Chr(34) & "," & item.picDirection & "," & Chr(34) & item.picDate & Chr(34) & "," & Chr(34) & item.picDescription & Chr(34) & "," & Chr(34) & item.alt & Chr(34) & ")")
                         TextBox2.Text = TextBox2.Text & vbNewLine & "plotting ..." & item.filename & ": " & item.dlon & ", " & item.dlat
                         TextBox2.Text = TextBox2.Text & vbNewLine & item.filename & " Done"
                     Next
@@ -844,6 +852,28 @@ err:
                 _picDirection = value
             End Set
         End Property
+
+        Private _picDescription As Double
+        Public Property picDescription As String
+            Get
+                Return _picDescription
+            End Get
+            Set(ByVal value As String)
+                _picDescription = value
+            End Set
+        End Property
+
+        Private _alt As Double
+        Public Property alt As Double
+            Get
+                Return _alt
+            End Get
+            Set(ByVal value As Double)
+                _alt = value
+            End Set
+        End Property
+
+
     End Class
 
 

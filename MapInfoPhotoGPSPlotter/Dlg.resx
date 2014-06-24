@@ -1084,18 +1084,18 @@
   <data name="ToolStripButton2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJ0SURBVDhPvZJZSNRRHEb/Dz30kkVmJEKSJWKBGBhSPZQY
-        Ua6UKyi5kLlRZijmuDTjrrO4TqloMy6NOlpZimGFUCgSoaUOJaZmQVEppoZKbqdxHCSrhyDogw8u995z
-        +HG5wn9JZkmNs6RQw9XcKrKVWpKk6mTj0d8lOE6JV6Q8cHV9MbHSLE0vi89Q+QTFlSA01eb76cuvbavP
-        lhvoPyRSVOruHS3HM7LAIGCoX838VKOh3yc1LI6r0FbJaa5NTzMyG+IVpcAzohC38GKExmoFc5N1G+Dl
-        T6Us6mKpu5lLTVkWqpI0ygtSuSETUZyTgNGzlnq1lLkv6nV4RQ8zJAJd+B/7m+BWRQ7fPpavw+1NUkMf
-        aPNo0eRwtyYLrSodTbmEKuU1KguTKVOIUEoT12Q15VnMvCsyjD3aKaa5TsHyqATGMjb2rX5vJAkG4+BV
-        NH0NvsSEeFQLKmU608O58F7GvXo53Q9la5d+Hv1lEPR4s9TlyvwjJ95U2xF27vj05fPuB4SKQjFfX0sY
-        60qhWSNjZUQMAxFrYF+oHvRnqduD+Y6TzLQdZaLpIJJIa/ydTQsMb1CqSGGiP5HbtVJ6n+onGYzVC8Kg
-        N5CVZ2dYeHKa2fZjTDY78Lnelp7MbQS4WuFgs8XGIFDmiRjoSOVObR4Mp8IL/bjPfVjodGP2sRNTLY6M
-        a+34oN6HTmaKOHwv9vvNWw3waoqyE2isykV3P4qefGG93bJNdORspjVtKw3JZqgSLLh+xZIAlz0rjvaW
-        LkZcEPIz4skXXyA7MZikS37EhHoQ4nuCs6cO43zEjkN21thaWbDbfAc7t5uwy9Rk4z/4twjCD9hU5P94
-        YTAtAAAAAElFTkSuQmCC
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJ1SURBVDhPvZJZSNRRHEb/Dz30kkVmJEKSJWKBGBhSPYgY
+        Ua6UKyipYblRZijmuDTjrrPoqFMq2ow6jTpaWYphhVAoEqHlQompWVBUiqmhkttpHEWyfAiCPvjgcu89
+        hx+XK/yXZBZXu0iUOq7lVpKt0pMk1SSvHf1dQuJUeEfKg1bWlxIrzNIMsvgMtW9wXDFCgzbf31B+b0tt
+        ttxIb5JIUYmHT7Qcr8gCo4DBXg1zk/XG/pjQsTCmRl8pp1GbnrbGbIh3lAKvCCXu4UUI9VUKZidqNsBL
+        n0tY6I+l5lYu1aVZqIvTKCtI5aZMRFFOAmue1dRqpMx+1azDywaYQRH0h2/aPwS3y3P4/qlsHW5tkBr7
+        UJ9Hky6He9VZ6NXp6MokVKquU6FMplQhQiVNXJVVl2Ux/b7QOPZIu5jGGgVLIxIYzdjYd4a94SQYiIPX
+        0fTU+RET6lklqFXpTA3lwgcZ92vldD6SrV76dfRXwdDlw2KHG3OPnXlbZUfYOaepK2Eeh4RypZhvbySM
+        dqTQqJOxPCyGvohVsOe8AQxgsdOTubaTTLccZ7zhMJJIawJcTAuMb1CiSGG8N5E7WindzwyTDMQaBBeg
+        O4jl52eYf3qamVYnJhod+FJrS1fmDgLdrHCw2WZjFKjyRPS1pXJXmwdDqfDSMO4LX+bb3Zl54sxkkyNj
+        ejs+ag7QLzNFHL4f+4PmzUZ4JYXZCdRX5tL/IIqufGG9nbIttOVspTltO3XJZqgTLLhx1ZJA133LjvaW
+        rmu4IORnxJMvvkh2YghJl/2JOe9JqN8Jzp46issxO47YWWNrZcFe813s3mnCHlOTjf/g3yIIPwHVOuT9
+        xNmtFAAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="ToolStripButton2.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
@@ -1138,7 +1138,7 @@
     <value>3, 0</value>
   </data>
   <data name="ToolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 25</value>
+    <value>189, 25</value>
   </data>
   <data name="ToolStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
