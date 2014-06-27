@@ -450,6 +450,7 @@ err:
             End If
 
             Dim SFA As New SaveFileDialog
+            SFA.Filter = "MapInfo Tab Files | *.tab"
 
             'new file
             If ComboBox2.SelectedIndex = 2 Then
@@ -467,6 +468,7 @@ err:
 
             If TextBox1.Text = "" Then
                 'no file specified
+                SFA.Title = "No new file name  specified, please choose a new file now."
 
                 If SFA.ShowDialog() = DialogResult.OK Then
                     Return SFA.FileName
@@ -544,7 +546,7 @@ err:
 
 
                         'add point
-                        InteropServices.MapInfoApplication.Do("Insert Into " & tableName & " (Obj, FileName, lat,lon,decimal_lat,decimal_lon,localX,localY,path,direction,Photodate,Description) Values(CreatePoint(" & item.localX & ", " & item.localY & ")," & Chr(34) & item.filename & Chr(34) & "," & Chr(34) & item.lat & Chr(34) & "," & Chr(34) & item.lon & Chr(34) & "," & item.dlat & "," & item.dlon & "," & item.localX & "," & item.localY & "," & Chr(34) & item.filepath & Chr(34) & "," & item.picDirection & "," & Chr(34) & item.picDate & Chr(34) & "," & Chr(34) & item.picDescription & Chr(34) & "," & Chr(34) & item.alt & Chr(34) & ")")
+                        InteropServices.MapInfoApplication.Do("Insert Into " & tableName & " (Obj, FileName, lat,lon,decimal_lat,decimal_lon,localX,localY,path,direction,Photodate,Description,Altitude) Values(CreatePoint(" & item.localX & ", " & item.localY & ")," & Chr(34) & item.filename & Chr(34) & "," & Chr(34) & item.lat & Chr(34) & "," & Chr(34) & item.lon & Chr(34) & "," & item.dlat & "," & item.dlon & "," & item.localX & "," & item.localY & "," & Chr(34) & item.filepath & Chr(34) & "," & item.picDirection & "," & Chr(34) & item.picDate & Chr(34) & "," & Chr(34) & item.picDescription & Chr(34) & "," & Chr(34) & item.alt & Chr(34) & ")")
                         TextBox2.Text = TextBox2.Text & vbNewLine & "plotting ..." & item.filename & ": " & item.dlon & ", " & item.dlat
                         TextBox2.Text = TextBox2.Text & vbNewLine & item.filename & " Done"
                     Next
