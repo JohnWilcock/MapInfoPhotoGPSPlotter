@@ -369,6 +369,8 @@ err:
             imageInfo.localX = 0
             imageInfo.localY = 0
 
+            On Error Resume Next
+
             For Each scan_property In property_ids
                 counter = counter + 1
                 byte_property_id = selected_image.GetPropertyItem(scan_property).Value
@@ -429,15 +431,24 @@ err:
 
 
                 ElseIf scan_property = 28 Then 'description of area
-                    imageInfo.picDescription = System.Text.Encoding.ASCII.GetString(byte_property_id)
+                    Dim descString As String = ""
+                    For k As Integer = 0 To ((byte_property_id.Length) / 2) - 2
+                        descString = descString & Chr(BitConverter.ToInt16(byte_property_id, k * 2))
+                    Next
+                    imageInfo.picDescription = descString.ToString.Replace(Chr(34), "")
+                    ' imageInfo.picDescription = System.Text.Encoding.ASCII.GetString(byte_property_id)
+
 
                 ElseIf scan_property = 6 Then 'altitude
-                    imageInfo.alt = System.BitConverter.ToInt32(byte_property_id, 0)
+            imageInfo.alt = System.BitConverter.ToInt32(byte_property_id, 0)
 
 
                 End If
 
             Next
+
+            On Error GoTo 0
+
 
         End Function
 
@@ -547,6 +558,7 @@ err:
 
                         'add point
                         InteropServices.MapInfoApplication.Do("Insert Into " & tableName & " (Obj, FileName, lat,lon,decimal_lat,decimal_lon,localX,localY,path,direction,Photodate,Description,Altitude) Values(CreatePoint(" & item.localX & ", " & item.localY & ")," & Chr(34) & item.filename & Chr(34) & "," & Chr(34) & item.lat & Chr(34) & "," & Chr(34) & item.lon & Chr(34) & "," & item.dlat & "," & item.dlon & "," & item.localX & "," & item.localY & "," & Chr(34) & item.filepath & Chr(34) & "," & item.picDirection & "," & Chr(34) & item.picDate & Chr(34) & "," & Chr(34) & item.picDescription & Chr(34) & "," & Chr(34) & item.alt & Chr(34) & ")")
+                        'TextBox2.Text = TextBox2.Text & "Insert Into " & tableName & " (Obj, FileName, lat,lon,decimal_lat,decimal_lon,localX,localY,path,direction,Photodate,Description,Altitude) Values(CreatePoint(" & item.localX & ", " & item.localY & ")," & Chr(34) & item.filename & Chr(34) & "," & Chr(34) & item.lat & Chr(34) & "," & Chr(34) & item.lon & Chr(34) & "," & item.dlat & "," & item.dlon & "," & item.localX & "," & item.localY & "," & Chr(34) & item.filepath & Chr(34) & "," & item.picDirection & "," & Chr(34) & item.picDate & Chr(34) & "," & Chr(34) & item.picDescription & Chr(34) & "," & Chr(34) & item.alt & Chr(34) & ")"
                         TextBox2.Text = TextBox2.Text & vbNewLine & "plotting ..." & item.filename & ": " & item.dlon & ", " & item.dlat
                         TextBox2.Text = TextBox2.Text & vbNewLine & item.filename & " Done"
                     Next
@@ -638,6 +650,7 @@ err:
         Function convertCoords(ByVal GridX As Double, ByVal GridY As Double) As Double()
             Dim otherCoodSystem As ProjNet.CoordinateSystems.ICoordinateSystem = SridReader.GetCSbyID(CoordinateSystemPicker1.ChosenCoordSystemEPSG)
             Dim WGS84 As ProjNet.CoordinateSystems.ICoordinateSystem = SridReader.GetCSbyID(4326)
+
 
             Dim ctfac As New ProjNet.CoordinateSystems.Transformations.CoordinateTransformationFactory()
             Dim trans As ProjNet.CoordinateSystems.Transformations.ICoordinateTransformation = ctfac.CreateFromCoordinateSystems(WGS84, otherCoodSystem)
@@ -855,7 +868,7 @@ err:
             End Set
         End Property
 
-        Private _picDescription As Double
+        Private _picDescription As String
         Public Property picDescription As String
             Get
                 Return _picDescription
